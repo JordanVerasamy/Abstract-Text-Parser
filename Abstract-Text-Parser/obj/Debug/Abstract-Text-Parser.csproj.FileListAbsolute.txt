@@ -1,0 +1,6 @@
+C:\Users\Jordan.Verasamy\Desktop\GitHub\Abstract-Text-Parser\Abstract-Text-Parser\bin\Debug\Abstract-Text-Parser.exe.config
+C:\Users\Jordan.Verasamy\Desktop\GitHub\Abstract-Text-Parser\Abstract-Text-Parser\bin\Debug\Abstract-Text-Parser.exe
+C:\Users\Jordan.Verasamy\Desktop\GitHub\Abstract-Text-Parser\Abstract-Text-Parser\bin\Debug\Abstract-Text-Parser.pdb
+C:\Users\Jordan.Verasamy\Desktop\GitHub\Abstract-Text-Parser\Abstract-Text-Parser\obj\Debug\Abstract-Text-Parser.csprojResolveAssemblyReference.cache
+C:\Users\Jordan.Verasamy\Desktop\GitHub\Abstract-Text-Parser\Abstract-Text-Parser\obj\Debug\Abstract-Text-Parser.exe
+C:\Users\Jordan.Verasamy\Desktop\GitHub\Abstract-Text-Parser\Abstract-Text-Parser\obj\Debug\Abstract-Text-Parser.pdb
