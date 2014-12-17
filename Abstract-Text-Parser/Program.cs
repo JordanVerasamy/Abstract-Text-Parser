@@ -10,28 +10,49 @@ namespace Abstract_Text_Parser
     {
         static void Main(string[] args)
         {
-            Dictionary<string, Func<int, int, int>> functions = new Dictionary<string, Func<int, int, int>>();
+            Dictionary<string, Func<List<int>, int>> functions = new Dictionary<string, Func<List<int>, int>>();
 
-            functions.Add("+", (x, y) => x + y);
-            functions.Add("-", (x, y) => x - y);
-            functions.Add("*", (x, y) => x * y);
-            functions.Add("/", (x, y) => x / y);
-            functions.Add("bs-some-shit", (x, y) => new Random().Next(1, 10));
+            functions.Add("+", (listOfArguments) =>
+            {
+                int count = 0;
+                foreach (int x in listOfArguments)
+                {
+                    count += x;
+                };
+                return count;
+            });
 
-            Console.WriteLine(parseString("(+ 3 5)", functions));
+
+            functions.Add("-", (listOfArguments) =>
+            {
+                int count = listOfArguments == null ? 0 : 2 * listOfArguments[0];
+                foreach (int x in listOfArguments)
+                {
+                    count -= x;
+                };
+                return count;
+            });
+
+            Console.WriteLine(parseSingleFunction("(- 3 6 8)", functions));
             Console.ReadLine();
 
         }
 
-        static int parseString(string input, Dictionary<string, Func<int, int, int>> functions)
+        static int parseSingleFunction(string input, Dictionary<string, Func<List<int>, int>> functions)
         {
-            string functionID;
-            functionID = input.Substring(1, input.Length-2).Split(' ')[0];
+            var inputComponents = input.Substring(1, input.Length-2).Split(' ');
 
-            int arg1 = int.Parse(input.Substring(1, input.Length - 2).Split(' ')[1]);
-            int arg2 = int.Parse(input.Substring(1, input.Length - 2).Split(' ')[2]);
+            int numArguments = inputComponents.Length - 1;
+            List<int> listOfArguments = new List<int>();
 
-            return functions[functionID](arg1, arg2);
+            string functionID = inputComponents[0];
+
+            for (int i = 1; i <= numArguments; i++)
+            {
+                listOfArguments.Add(int.Parse(inputComponents[i]));
+            }
+
+            return functions[functionID](listOfArguments);
         }
     }
 }
