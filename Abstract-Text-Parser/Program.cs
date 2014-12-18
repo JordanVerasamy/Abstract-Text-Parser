@@ -10,49 +10,58 @@ namespace Abstract_Text_Parser
     {
         static void Main(string[] args)
         {
-            Dictionary<string, Func<List<int>, int>> functions = new Dictionary<string, Func<List<int>, int>>();
+            Dictionary<string, Func<List<dynamic>, dynamic>> functions = new Dictionary<string, Func<List<dynamic>, dynamic>>();
 
             functions.Add("+", (listOfArguments) =>
             {
                 int count = 0;
-                foreach (int x in listOfArguments)
+                foreach (string x in listOfArguments)
                 {
-                    count += x;
+                    count += int.Parse(x);
                 };
                 return count;
             });
-
 
             functions.Add("-", (listOfArguments) =>
             {
-                int count = listOfArguments == null ? 0 : 2 * listOfArguments[0];
-                foreach (int x in listOfArguments)
+                int count = listOfArguments == null ? 0 : 2 * int.Parse(listOfArguments[0]);
+                foreach (string x in listOfArguments)
                 {
-                    count -= x;
+                    count -= int.Parse(x);
                 };
                 return count;
             });
 
-            Console.WriteLine(parseSingleFunction("(- 3 6 8)", functions));
+            Console.WriteLine(parseSingleFunction("(+ 3 6 ayy)", functions));
             Console.ReadLine();
 
         }
 
-        static int parseSingleFunction(string input, Dictionary<string, Func<List<int>, int>> functions)
+        static dynamic parseSingleFunction(string input, Dictionary<string, Func<List<dynamic>, dynamic>> functions)
         {
             var inputComponents = input.Substring(1, input.Length-2).Split(' ');
 
             int numArguments = inputComponents.Length - 1;
-            List<int> listOfArguments = new List<int>();
+            List<dynamic> listOfArguments = new List<dynamic>();
 
             string functionID = inputComponents[0];
 
             for (int i = 1; i <= numArguments; i++)
             {
-                listOfArguments.Add(int.Parse(inputComponents[i]));
+                listOfArguments.Add(inputComponents[i]);
             }
 
-            return functions[functionID](listOfArguments);
+            try
+            {
+                return functions[functionID](listOfArguments);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("ERROR! You probably didn't obey the contract for one of the functions you used.\nYou fucker.");
+                Console.WriteLine("\n\nMessage: \n" + e.Message);
+                Console.WriteLine("\n\nStack Trace: \n" + e.StackTrace);
+                return "";
+            }
         }
     }
 }
