@@ -11,15 +11,13 @@ namespace Abstract_Text_Parser
         static void Main(string[] args)
         {
             ListOfFunctions functions = new ListOfFunctions();
-            functions.getFunctions();
 
-            Console.WriteLine(parseString("(int-equals? (- (+ 5 6) 3 3) (+ 4 1))", functions));
-            // returns true
-            Console.WriteLine(parseString("(and (is-elvin-dumb?) false)", functions));
-            // returns false
-            Console.WriteLine(parseString("(+ (+ 5 7 2 7) (- 5 2 6))", functions));
-            // returns 18
-            Console.ReadLine();
+            string input;
+            while (true)
+            {
+                input = Console.ReadLine();
+                Console.WriteLine(parseString(input, functions));
+            }
         }
 
         // consumes a function of the form (operator argument argument ... argument) and 
@@ -57,7 +55,7 @@ namespace Abstract_Text_Parser
         // starting from the inside and working outward
         static dynamic parseString(string input, ListOfFunctions functions)
         {
-            if (isSingleFunction(input))
+            if ((input.IndexOf("(") == input.LastIndexOf("(")) && (input.IndexOf(")") == input.LastIndexOf(")")))
             {
                 return parseSingleFunction(input, functions);
             }
@@ -67,7 +65,6 @@ namespace Abstract_Text_Parser
             string innermostFunction = input.Substring(endpoints[0], endpoints[1] - endpoints[0] + 1);
             dynamic functionReturn = parseSingleFunction(innermostFunction, functions);
 
-            // using ToString here will eventually fuck me over when I try to use types without a built in ToString method
             return parseString(input.Replace(innermostFunction, functionReturn.ToString()), functions);
         }
 
@@ -87,12 +84,6 @@ namespace Abstract_Text_Parser
             endpoints.Add(firstEndingBracket);
 
             return endpoints;
-        }
-
-        // returns true if and only if the input contains exactly one function call
-        static Boolean isSingleFunction (string input)
-        {
-            return (input.IndexOf("(") == input.LastIndexOf("(")) && (input.IndexOf(")") == input.LastIndexOf(")"));
         }
     }
 }

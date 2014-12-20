@@ -8,12 +8,9 @@ namespace Abstract_Text_Parser
 {
     class ListOfFunctions : Dictionary<string, Func<List<string>, dynamic>>
     {
-        public ListOfFunctions()
-        {
-        }
-
         // Sets up which functions the parser will be able to... well... parse
-        public void getFunctions()
+        // Note that the arguments are passed as strings, so any required conversion must occur in-function
+        public ListOfFunctions()
         {
             // (listof int) => int
             this.Add("+", (listOfArguments) =>
@@ -27,12 +24,34 @@ namespace Abstract_Text_Parser
             });
 
             // (listof int) => int
+            this.Add("*", (listOfArguments) =>
+            {
+                int count = 1;
+                foreach (string x in listOfArguments)
+                {
+                    count *= int.Parse(x);
+                };
+                return count;
+            });
+
+            // (listof int) => int
             this.Add("-", (listOfArguments) =>
             {
                 int count = listOfArguments == null ? 0 : 2 * int.Parse(listOfArguments[0]);
                 foreach (string x in listOfArguments)
                 {
                     count -= int.Parse(x);
+                };
+                return count;
+            });
+
+            // (listof int) => int
+            this.Add("/", (listOfArguments) =>
+            {
+                int count = listOfArguments == null ? 0 : (int)Math.Pow(double.Parse(listOfArguments[0]), 2);
+                foreach (string x in listOfArguments)
+                {
+                    count /= int.Parse(x);
                 };
                 return count;
             });
@@ -49,12 +68,6 @@ namespace Abstract_Text_Parser
                         return false;
                     }
                 }
-                return true;
-            });
-
-            // (listof any) => boolean
-            this.Add("is-elvin-dumb?", (listOfArguments) =>
-            {
                 return true;
             });
 
@@ -82,6 +95,12 @@ namespace Abstract_Text_Parser
                     }
                 }
                 return true;
+            });
+
+            // boolean => boolean
+            this.Add("not", (listOfArguments) =>
+            {
+                return (listOfArguments[0] == "True" || listOfArguments[0] == "true") ? false : true;
             });
         }
     }
