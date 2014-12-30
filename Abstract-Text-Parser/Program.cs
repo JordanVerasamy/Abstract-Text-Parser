@@ -65,6 +65,7 @@ namespace Abstract_Text_Parser
             string innermostFunction = input.Substring(endpoints[0], endpoints[1] - endpoints[0] + 1);
             dynamic functionReturn = parseSingleFunction(innermostFunction, functions);
 
+            // this fucks me over when I use types without useful ToString() methods
             return parseString(input.Replace(innermostFunction, functionReturn.ToString()), functions);
         }
 
